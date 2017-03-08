@@ -17,6 +17,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 //import java.util.Scanner;
 import javax.imageio.ImageIO;
 //import javax.swing.JOptionPane;
@@ -24,7 +29,7 @@ import static org.apache.commons.codec.binary.Base64.encodeBase64;
 
 /**
  *
- * @author dany
+ * @author GSEM
  */
 public class Cifrado {
 
@@ -33,15 +38,25 @@ public class Cifrado {
      */
     public static void main(String[] args)  {
         // TODO code application logic here
-        String key = "92AE31A79FEEB2A3"; //llave
-        String iv = "0123456789ABCDEF"; // vector de inicialización
+        String key = ""; //llave
+        String iv = ""; // vector de inicialización
         String codigo=""; 
         String codigoEnc;
         String ruta;
         String nombre;
         String textoEmbebido;
+        String usuario,password;
         Scanner sc = new Scanner(System.in);
         char opcion=' ';
+        
+        System.out.println("Ingrese usuario");
+        usuario=sc.next();
+        System.out.println("Ingrese contraseña");
+        password=sc.next();
+        key=genKey(usuario, password);
+        iv=genIV(usuario, password);
+        
+        
         
         System.out.println("Encripatar(e) o desencriptar(d)");
         opcion=sc.next().charAt(0);
@@ -154,6 +169,7 @@ public class Cifrado {
             
     }
     
+    /*BUSCAR UNA NUEVA MAERA DE GENERAR LA SECUENCIA*/
     public static int[] generarSecuencia(long semilla, int n){
         int[] numeros = new int[n];
         int sigNumero;
@@ -212,6 +228,57 @@ public class Cifrado {
         }
         return codigoOrdenado;
     }
+    
+    public static String genKey(String user, String passw){
+        String key = "";
+        byte[] digest = null;
+        MessageDigest md = null;
+        try {
+            md = MessageDigest.getInstance("SHA-256");
+            md.update(user.getBytes("UTF-8"));
+            digest = md.digest();
+            user = String.format("%064x", new java.math.BigInteger(1, digest));
+            //System.out.println("User "+user);
+            md.update(passw.getBytes("UTF-8"));
+            digest = md.digest();
+            passw = String.format("%064x", new java.math.BigInteger(1, digest));
+            //System.out.println("Passw: "+passw);
+            user = user.substring(0,user.length()/8);
+            passw = passw.substring(56,passw.length());
+            key = user+passw;
+
+        } catch (UnsupportedEncodingException | NoSuchAlgorithmException ex) {
+            Logger.getLogger(Cifrado.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return key;
+    }
+    
+    public static String genIV(String user,String passw){
+    String iv = "";
+    byte[] digest = null;
+    MessageDigest md = null;
+    try {
+        md = MessageDigest.getInstance("SHA-256");
+        md.update(user.getBytes("UTF-8"));
+        digest = md.digest();
+        user = String.format("%064x", new java.math.BigInteger(1, digest));
+        //System.out.println("User "+user);
+        md.update(passw.getBytes("UTF-8"));
+        digest = md.digest();
+        passw = String.format("%064x", new java.math.BigInteger(1, digest));
+        //System.out.println("Passw: "+passw);
+        user = user.substring(0,user.length()/8);
+        passw = passw.substring(56,passw.length());
+        for (int i = 0; i < user.length(); i++) {
+          iv += user.charAt(i);
+          iv += passw.charAt(i);
+        }
+
+    } catch (UnsupportedEncodingException | NoSuchAlgorithmException ex) {
+        Logger.getLogger(Cifrado.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return iv;
+  }
 }
 
 class archivoExiste extends Exception{
