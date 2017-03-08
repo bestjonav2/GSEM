@@ -24,7 +24,7 @@ public class JgetKey{
             key = user+passw;
 
         } catch (UnsupportedEncodingException | NoSuchAlgorithmException ex) {
-            Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(JgetKey.class.getName()).log(Level.SEVERE, null, ex);
         }
         return key;
     }
@@ -50,7 +50,7 @@ public class JgetKey{
         }
 
     } catch (UnsupportedEncodingException | NoSuchAlgorithmException ex) {
-        Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
+        Logger.getLogger(JgetKey.class.getName()).log(Level.SEVERE, null, ex);
     }
     return iv;
   }
