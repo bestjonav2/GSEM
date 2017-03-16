@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gestionarchivos;
+package frames;
 
 import cifrado.cifrar;
+import gestionarchivos.GestionA;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
@@ -25,6 +26,7 @@ public class JFGestionA extends javax.swing.JFrame {
     GestionA gestion = new GestionA();
     String termino = "";
     String ruta = "";
+    private static Login log = new Login();
 
     private ImageIcon getScaledImage(Image srcImg, int w, int h) {
         BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
@@ -42,6 +44,7 @@ public class JFGestionA extends javax.swing.JFrame {
      */
     public JFGestionA() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -222,7 +225,7 @@ public class JFGestionA extends javax.swing.JFrame {
             newfile = nombre_nuevo.getText();
             String ubic = xd.getText();
             cifrar cod = new cifrar();
-            cod.encriptarImagen(ubic, 20, ruta, "jose", "123", newfile, txtAreaTexto);
+            cod.encriptarImagen(ubic, 20, ruta, log.getUser(), log.getPass(), newfile, txtAreaTexto);
             txtAreaTexto.setLineWrap(true);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -234,7 +237,6 @@ public class JFGestionA extends javax.swing.JFrame {
 
     private void decriptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decriptActionPerformed
         // TODO add your handling code here:
-
         txtAreaTexto.setText("");
         archivo = seleccionado.getSelectedFile();
         ruta = archivo.getAbsolutePath();
@@ -242,7 +244,7 @@ public class JFGestionA extends javax.swing.JFrame {
         newfile = nombre_nuevo.getText();
         try {
             cifrar cod = new cifrar();
-            String txtEmb = cod.desencriptarImagen(ruta, "jose", "123", newfile, txtAreaTexto, xd);
+            String txtEmb = cod.desencriptarImagen(ruta, log.getUser(), log.getPass(), newfile, txtAreaTexto, xd);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
@@ -259,10 +261,10 @@ public class JFGestionA extends javax.swing.JFrame {
 
     private void xdKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_xdKeyReleased
         // TODO add your handling code here:
-        if(evt.getKeyChar()=='°'){
-            xd.setText( xd.getText().substring(0, xd.getText().length() -1));
+        if (evt.getKeyChar() == '°') {
+            xd.setText(xd.getText().substring(0, xd.getText().length() - 1));
             JOptionPane.showMessageDialog(this, "Caracter invalido.",
-                    "Error",JOptionPane.WARNING_MESSAGE);
+                    "Error", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_xdKeyReleased
 
@@ -296,7 +298,8 @@ public class JFGestionA extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JFGestionA().setVisible(true);
+                new JFGestionA().setVisible(false);
+                log.setVisible(true);
             }
         });
     }

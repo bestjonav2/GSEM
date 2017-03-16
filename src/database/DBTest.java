@@ -20,14 +20,14 @@ public class DBTest {
         System.out.println(db.getUserID("Jona"));
         System.out.println(db.getUserID("juan"));
         System.out.println(db.getUserID("julian"));
-//        PasswordHash aux = new PasswordHash();
-//        try {
-//            aux.createHash("123");
-//        } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
-//            Logger.getLogger(DBTest.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        System.out.println("Salt="+aux.getSalt());
-//        System.out.println("Hash="+aux.getHash());
+        PasswordHash aux = new PasswordHash();
+        try {
+            aux.createHash("123");
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
+            Logger.getLogger(DBTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println("Salt="+aux.getSalt());
+        System.out.println("Hash="+aux.getHash());
         System.out.println(db.validateCred("Jona", "1233333"));
     }
     

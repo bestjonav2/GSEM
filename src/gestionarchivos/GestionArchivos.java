@@ -5,6 +5,8 @@
  */
 package gestionarchivos;
 
+import frames.JFGestionA;
+
 /**
  *
  * @author Oscar

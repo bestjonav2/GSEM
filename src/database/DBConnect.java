@@ -22,9 +22,9 @@ import java.util.logging.Logger;
  */
 public class DBConnect {
 
-    private String host = "jdbc:mysql://localhost/gsmDB";
-    private String user = "root";
-    private String passw = "181297jm";
+    private String host = "jdbc:mysql://192.168.1.104/gsmDB";
+    private String user = "piolin";
+    private String passw = "piolin123";
     private Connection dbcon;
 
     private Connection connect() {

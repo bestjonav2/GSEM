@@ -6,6 +6,8 @@
 package frames;
 
 import com.sun.awt.AWTUtilities;
+import database.DBConnect;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,15 +15,14 @@ import com.sun.awt.AWTUtilities;
  */
 public class Login extends javax.swing.JFrame {
 
-    int x,y;
+    private int x, y;
+    private String user = "";
+    private String pass = "";
     public Login() {
         initComponents();
-                
-        initComponents();
+
         AWTUtilities.setWindowOpaque(this, false);
         this.setLocationRelativeTo(null);
-
-        
 
     }
 
@@ -35,9 +36,8 @@ public class Login extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jLabel1 = new javax.swing.JLabel();
+        userTF = new javax.swing.JTextField();
+        passTF = new javax.swing.JPasswordField();
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
@@ -45,6 +45,7 @@ public class Login extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         base = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -53,22 +54,19 @@ public class Login extends javax.swing.JFrame {
         jPanel1.setOpaque(false);
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTextField1.setFont(new java.awt.Font("Britannic Bold", 3, 18)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(255, 153, 51));
-        jTextField1.setBorder(null);
-        jTextField1.setOpaque(false);
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 150, 230, 40));
+        userTF.setBackground(new java.awt.Color(255, 255, 102));
+        userTF.setFont(new java.awt.Font("Britannic Bold", 3, 18)); // NOI18N
+        userTF.setForeground(new java.awt.Color(255, 153, 51));
+        userTF.setBorder(null);
+        userTF.setOpaque(false);
+        jPanel1.add(userTF, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 150, 250, 40));
 
-        jPasswordField1.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
-        jPasswordField1.setForeground(new java.awt.Color(255, 153, 0));
-        jPasswordField1.setBorder(null);
-        jPasswordField1.setOpaque(false);
-        jPanel1.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 250, 30));
-
-        jLabel1.setFont(new java.awt.Font("Tempus Sans ITC", 3, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(240, 145, 30));
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesde/txt_user.png"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, 300, 60));
+        passTF.setBackground(new java.awt.Color(255, 255, 102));
+        passTF.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
+        passTF.setForeground(new java.awt.Color(255, 153, 0));
+        passTF.setBorder(null);
+        passTF.setOpaque(false);
+        jPanel1.add(passTF, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 230, 250, 30));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesde/txt_pass.png"))); // NOI18N
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 210, 310, 70));
@@ -94,7 +92,7 @@ public class Login extends javax.swing.JFrame {
                 jButton2MouseClicked(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 310, 80, 30));
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 310, 110, 30));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesde/faq-c2c.png"))); // NOI18N
         jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -110,6 +108,9 @@ public class Login extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, 330, 60));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesde/txt_user.png"))); // NOI18N
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 150, 310, 60));
 
         base.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesde/frame.png"))); // NOI18N
         jPanel1.add(base, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 550, 450));
@@ -129,22 +130,38 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MousePressed
-        x=evt.getX();
-        y=evt.getY();
+        x = evt.getX();
+        y = evt.getY();
     }//GEN-LAST:event_jLabel6MousePressed
 
     private void jLabel6MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseReleased
-      this.setLocation(this.getLocation().x +evt.getX()-x,this.getLocation().y + evt.getY()-y);
+        this.setLocation(this.getLocation().x + evt.getX() - x, this.getLocation().y + evt.getY() - y);
     }//GEN-LAST:event_jLabel6MouseReleased
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-      String user;
+        user = userTF.getText();
+        pass = passTF.getText();
+        DBConnect db = new DBConnect();
+        boolean validPW = db.validateCred(user, pass);
+        if (validPW) {
+            JFGestionA frm = new JFGestionA();
+            frm.setVisible(true);
+            this.setVisible(false);
+        } else {
+            JOptionPane.showMessageDialog(this, "Contraseña incorrecta", "Error", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-   System.exit(WIDTH);
+        System.exit(WIDTH);
     }//GEN-LAST:event_jButton2MouseClicked
-
+    
+    public String getUser() {
+        return user;
+    }
+    public String getPass(){
+        return pass;
+    }
     /**
      * @param args the command line arguments
      */
@@ -161,15 +178,11 @@ public class Login extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+
         //</editor-fold>
 
         /* Create and display the form */
@@ -191,7 +204,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPasswordField passTF;
+    private javax.swing.JTextField userTF;
     // End of variables declaration//GEN-END:variables
 }
