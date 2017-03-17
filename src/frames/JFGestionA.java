@@ -71,6 +71,8 @@ public class JFGestionA extends javax.swing.JFrame {
         nombre_nuevo = new javax.swing.JTextArea();
         jScrollPane1 = new javax.swing.JScrollPane();
         lblImagen = new javax.swing.JLabel();
+        btnGuardarImagen = new javax.swing.JButton();
+        btnGuardarTexto = new javax.swing.JButton();
 
         jToolBar1.setRollover(true);
 
@@ -136,6 +138,20 @@ public class JFGestionA extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(lblImagen);
 
+        btnGuardarImagen.setText("guardar imagen");
+        btnGuardarImagen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarImagenActionPerformed(evt);
+            }
+        });
+
+        btnGuardarTexto.setText("guardar texto");
+        btnGuardarTexto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarTextoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -150,7 +166,11 @@ public class JFGestionA extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(decript)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnGuardarImagen)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnGuardarTexto))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -163,18 +183,22 @@ public class JFGestionA extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(btnAbrirArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(encrypt)
-                        .addComponent(decript))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnGuardarImagen)
+                        .addComponent(btnGuardarTexto))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(decript)
+                        .addComponent(encrypt)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         pack();
@@ -223,16 +247,24 @@ public class JFGestionA extends javax.swing.JFrame {
         try {
             String newfile;
             newfile = nombre_nuevo.getText();
-            String ubic = xd.getText();
-            cifrar cod = new cifrar();
-            cod.encriptarImagen(ubic, 20, ruta, log.getUser(), log.getPass(), newfile, txtAreaTexto);
-            txtAreaTexto.setLineWrap(true);
+            if (newfile.equals("")) {
+                JOptionPane.showMessageDialog(this, "Ingrese nombre de archivo", "Nombre Invalido", JOptionPane.WARNING_MESSAGE);
+
+            } else {
+                String ubic = xd.getText();
+                if (ubic.equals("")) {
+                    ubic = " ";
+                }
+                cifrar cod = new cifrar();
+                cod.encriptarImagen(ubic, 20, ruta, log.getUser(), log.getPass(), newfile, txtAreaTexto);
+                txtAreaTexto.setLineWrap(true);
+                xd.setText("");
+                nombre_nuevo.setText("");
+                lblImagen.setIcon(null);
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
-        xd.setText("");
-        nombre_nuevo.setText("");
-        lblImagen.setIcon(null);
     }//GEN-LAST:event_encryptActionPerformed
 
     private void decriptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decriptActionPerformed
@@ -243,16 +275,22 @@ public class JFGestionA extends javax.swing.JFrame {
         String newfile;
         newfile = nombre_nuevo.getText();
         try {
-            cifrar cod = new cifrar();
-            String txtEmb = cod.desencriptarImagen(ruta, log.getUser(), log.getPass(), newfile, txtAreaTexto, xd);
+            if (newfile.equals("")) {
+                JOptionPane.showMessageDialog(this, "Ingrese nombre de archivo", "Nombre Invalido", JOptionPane.WARNING_MESSAGE);
+            } else {
+                cifrar cod = new cifrar();
+                String txtEmb = cod.desencriptarImagen(ruta, log.getUser(), log.getPass(), newfile, txtAreaTexto, xd);
+                File rut = new File("Data\\" + newfile + ".jpg");
+                bytesImg = gestion.AbrirAImagen(rut);
+                ImageIcon ii = new ImageIcon(bytesImg);
+                Image img = ii.getImage();
+                lblImagen.setIcon(getScaledImage(img, 295, 265));
+            }
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
-        File rut = new File("Data\\" + newfile + ".jpg");
-        bytesImg = gestion.AbrirAImagen(rut);
-        ImageIcon ii = new ImageIcon(bytesImg);
-        Image img = ii.getImage();
-        lblImagen.setIcon(getScaledImage(img, 295, 265));
+
     }//GEN-LAST:event_decriptActionPerformed
 
     private void encryptMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_encryptMouseClicked
@@ -267,6 +305,39 @@ public class JFGestionA extends javax.swing.JFrame {
                     "Error", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_xdKeyReleased
+
+    private void btnGuardarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarImagenActionPerformed
+        if (seleccionado.showDialog(null, "GUARDAR IMAGEN") == JFileChooser.APPROVE_OPTION) {
+            archivo = seleccionado.getSelectedFile();
+            if (archivo.getName().endsWith("jpg") || archivo.getName().endsWith("png") || archivo.getName().endsWith("gif")) {
+                String respuesta = gestion.GuardarAImagen(archivo, bytesImg);
+                if (respuesta != null) {
+                    JOptionPane.showMessageDialog(null, respuesta);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al guardar imagen.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "La imagen se debe guardar en formato de imagen.");
+            }
+        }
+    }//GEN-LAST:event_btnGuardarImagenActionPerformed
+
+    private void btnGuardarTextoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarTextoActionPerformed
+        if (seleccionado.showDialog(null, "GUARDAR TEXTO") == JFileChooser.APPROVE_OPTION) {
+            archivo = seleccionado.getSelectedFile();
+            if (archivo.getName().endsWith("txt")) {
+                String contenido = txtAreaTexto.getText();
+                String respuesta = gestion.GuardarATexto(archivo, contenido);
+                if (respuesta != null) {
+                    JOptionPane.showMessageDialog(null, respuesta);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al guardar texto.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "El texto se debe guardar en un formato de texto.");
+            }
+        }
+    }//GEN-LAST:event_btnGuardarTextoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -306,6 +377,8 @@ public class JFGestionA extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAbrirArchivo;
+    private javax.swing.JButton btnGuardarImagen;
+    private javax.swing.JButton btnGuardarTexto;
     private javax.swing.JButton decript;
     private javax.swing.JButton encrypt;
     private javax.swing.JPanel jPanel1;

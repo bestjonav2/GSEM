@@ -60,7 +60,9 @@ public class GestionA {
 
     /*Abrir una imagen*/
     public byte[] AbrirAImagen(File archivo) {
-        byte[] bytesImg = new byte[1024 * 100];
+        Long tam = archivo.length();
+        Integer in = tam.intValue();
+        byte[] bytesImg = new byte[in];
         try {
             entrada = new FileInputStream(archivo);
             entrada.read(bytesImg);
