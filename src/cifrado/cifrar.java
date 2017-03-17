@@ -90,6 +90,7 @@ public class cifrar {
             throw new archivoExiste("Este archivo ya existe");
         }
         msg.setText(textoEmbebido);
+        //msg.setLineWrap(true);
         return textoEmbebido;
             
     }

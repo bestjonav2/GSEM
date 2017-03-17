@@ -217,7 +217,7 @@ public class JFGestionA extends javax.swing.JFrame {
                 if (archivo.getName().endsWith("txt")) {
                     String contenido = gestion.AbrirATexto(archivo);
                     txtAreaTexto.setText(contenido);
-                    txtAreaTexto.setLineWrap(true);
+                    //txtAreaTexto.setLineWrap(true);
                 } else {
                     if (archivo.getName().endsWith("jpg") || archivo.getName().endsWith("png")) {
                         //imgExt(archivo);
@@ -257,7 +257,7 @@ public class JFGestionA extends javax.swing.JFrame {
                 }
                 cifrar cod = new cifrar();
                 cod.encriptarImagen(ubic, 20, ruta, log.getUser(), log.getPass(), newfile, txtAreaTexto);
-                txtAreaTexto.setLineWrap(true);
+                //txtAreaTexto.setLineWrap(true);
                 xd.setText("");
                 nombre_nuevo.setText("");
                 lblImagen.setIcon(null);
@@ -280,6 +280,7 @@ public class JFGestionA extends javax.swing.JFrame {
             } else {
                 cifrar cod = new cifrar();
                 String txtEmb = cod.desencriptarImagen(ruta, log.getUser(), log.getPass(), newfile, txtAreaTexto, xd);
+                //txtAreaTexto.setLineWrap(true);
                 File rut = new File("Data\\" + newfile + ".jpg");
                 bytesImg = gestion.AbrirAImagen(rut);
                 ImageIcon ii = new ImageIcon(bytesImg);
