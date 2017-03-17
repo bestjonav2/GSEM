@@ -39,11 +39,9 @@ public class Login extends javax.swing.JFrame {
         userTF = new javax.swing.JTextField();
         passTF = new javax.swing.JPasswordField();
         jLabel3 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        inicioLbl = new javax.swing.JLabel();
+        cancelLbl = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         base = new javax.swing.JLabel();
@@ -71,32 +69,27 @@ public class Login extends javax.swing.JFrame {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesde/txt_pass.png"))); // NOI18N
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 210, 310, 70));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesde/btn_iniciar1.png"))); // NOI18N
-        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 310, 120, 70));
+        inicioLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesde/btn_iniciar1.png"))); // NOI18N
+        inicioLbl.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        inicioLbl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                inicioLblMouseClicked(evt);
+            }
+        });
+        jPanel1.add(inicioLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 310, 120, 70));
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesde/btn_cancelar1.png"))); // NOI18N
-        jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 290, 140, 80));
+        cancelLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesde/btn_cancelar1.png"))); // NOI18N
+        cancelLbl.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cancelLbl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cancelLblMouseClicked(evt);
+            }
+        });
+        jPanel1.add(cancelLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 290, 140, 80));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesde/faq-c2c.png"))); // NOI18N
         jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 290, 110, 110));
-
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton2MouseClicked(evt);
-            }
-        });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 310, 110, 30));
-
-        jButton1.setText("jButton1");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
-            }
-        });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 333, -1, 30));
 
         jLabel6.setCursor(new java.awt.Cursor(java.awt.Cursor.MOVE_CURSOR));
         jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -138,7 +131,8 @@ public class Login extends javax.swing.JFrame {
         this.setLocation(this.getLocation().x + evt.getX() - x, this.getLocation().y + evt.getY() - y);
     }//GEN-LAST:event_jLabel6MouseReleased
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+    private void inicioLblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inicioLblMouseClicked
+        // TODO add your handling code here:
         user = userTF.getText();
         pass = passTF.getText();
         DBConnect db = new DBConnect();
@@ -150,11 +144,12 @@ public class Login extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Contraseña incorrecta", "Error", JOptionPane.WARNING_MESSAGE);
         }
-    }//GEN-LAST:event_jButton1MouseClicked
+    }//GEN-LAST:event_inicioLblMouseClicked
 
-    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+    private void cancelLblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelLblMouseClicked
+        // TODO add your handling code here:
         System.exit(WIDTH);
-    }//GEN-LAST:event_jButton2MouseClicked
+    }//GEN-LAST:event_cancelLblMouseClicked
     
     public String getUser() {
         return user;
@@ -195,12 +190,10 @@ public class Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel base;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel cancelLbl;
+    private javax.swing.JLabel inicioLbl;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
