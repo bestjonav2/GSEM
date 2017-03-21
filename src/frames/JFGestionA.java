@@ -26,7 +26,7 @@ public class JFGestionA extends javax.swing.JFrame {
     GestionA gestion = new GestionA();
     String termino = "";
     String ruta = "";
-    private static Login log = new Login();
+    //private static Login log = new Login();
 
     private ImageIcon getScaledImage(Image srcImg, int w, int h) {
         BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
@@ -256,7 +256,7 @@ public class JFGestionA extends javax.swing.JFrame {
                     ubic = " ";
                 }
                 cifrar cod = new cifrar();
-                cod.encriptarImagen(ubic, 20, ruta, log.getUser(), log.getPass(), newfile, txtAreaTexto);
+                cod.encriptarImagen(ubic, 20, ruta, "piolin", "123", newfile, txtAreaTexto);
                 //txtAreaTexto.setLineWrap(true);
                 xd.setText("");
                 nombre_nuevo.setText("");
@@ -279,7 +279,7 @@ public class JFGestionA extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Ingrese nombre de archivo", "Nombre Invalido", JOptionPane.WARNING_MESSAGE);
             } else {
                 cifrar cod = new cifrar();
-                String txtEmb = cod.desencriptarImagen(ruta, log.getUser(), log.getPass(), newfile, txtAreaTexto, xd);
+                String txtEmb = cod.desencriptarImagen(ruta, "piolin", "124", newfile, txtAreaTexto, xd);
                 //txtAreaTexto.setLineWrap(true);
                 File rut = new File("Data\\" + newfile + ".jpg");
                 bytesImg = gestion.AbrirAImagen(rut);
@@ -288,8 +288,15 @@ public class JFGestionA extends javax.swing.JFrame {
                 lblImagen.setIcon(getScaledImage(img, 295, 265));
             }
 
+        }catch(javax.crypto.BadPaddingException bp){
+            JOptionPane.showMessageDialog(this, "No tienes permiso"
+                    + "para abrir esta imagen"
+                    + "\nConsulta con el administrador","Error", JOptionPane.WARNING_MESSAGE);
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
+            System.out.println(""+e.getClass());
+            
         }
 
     }//GEN-LAST:event_decriptActionPerformed
@@ -370,8 +377,8 @@ public class JFGestionA extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JFGestionA().setVisible(false);
-                log.setVisible(true);
+                new JFGestionA().setVisible(true);
+                //log.setVisible(true);
             }
         });
     }
